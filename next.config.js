@@ -1,9 +1,10 @@
-const { withContentlayer } = require('next-contentlayer2')
+import bundleAnalyzer from '@next/bundle-analyzer';
+import { withContentlayer } from 'next-contentlayer2';
 
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
+
+const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 })
-
 // You might need to insert additional domains in script-src if you are using external services
 const ContentSecurityPolicy = `
   default-src 'self';
@@ -57,7 +58,7 @@ const securityHeaders = [
 /**
  * @type {import('next/dist/next-server/server/config').NextConfig}
  **/
-module.exports = () => {
+export default () => {
   const plugins = [withContentlayer, withBundleAnalyzer]
   return plugins.reduce((acc, next) => next(acc), {
     reactStrictMode: true,
